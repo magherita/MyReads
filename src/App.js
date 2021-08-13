@@ -33,11 +33,13 @@ class BooksApp extends React.Component {
 
   onSearch = (searchTerm) => {
     BooksAPI.search(searchTerm)
-      .then(bks => {
-        const updatedBooks = this.state.books.concat(bks);
-        const uniqueBooks = updatedBooks.filter((bk, index) => updatedBooks.indexOf(bk) === index);
+      .then(books => {
         this.setState({
-          books: uniqueBooks
+          books: books
+        });
+      }).catch(error => {
+        this.setState({
+          books: error.items
         });
       });
   }
@@ -56,11 +58,9 @@ class BooksApp extends React.Component {
         if (currentShelvedBooks[shelf].filter(bk => bk.id === book.id).length > 0) {
           // remove book from current shelf
           currentShelvedBooks[shelf] = [...currentShelvedBooks[shelf].filter(bk => bk.id !== book.id)];
-          return;
         }
       });
 
-      if (currentShelvedBooks[selectedShelf].filter(bk => bk.id === book.id)) { }
       currentShelvedBooks[selectedShelf].push(book);
     } else {
       // remove book from current shelf

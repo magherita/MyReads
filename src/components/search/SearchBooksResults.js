@@ -4,11 +4,15 @@ import BooksGrid from "../books/BooksGrid";
 
 const SearchBooksResults = (props) => (
     <div className="search-books-results">
-        <BooksGrid
-            books={props.books}
-            onChangeShelf={props.onChangeShelf}
-            shelfOptions={props.shelfOptions}
-        />
+        {
+            props.books.length && (
+                <BooksGrid
+                    books={props.books}
+                    onChangeShelf={props.onChangeShelf}
+                    shelfOptions={props.shelfOptions}
+                />
+            )
+        }
     </div>
 )
 

@@ -7,12 +7,16 @@ const BookShelf = (props) => (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{props.shelf.label}</h2>
             <div className="bookshelf-books">
-
-                <BooksGrid
-                    books={props.books}
-                    shelfOptions={props.shelfOptions}
-                    currentShelf={props.shelf.value}
-                    onChangeShelf={props.onChangeShelf} />
+                {
+                    props.books.length &&
+                    (
+                        <BooksGrid
+                            books={props.books}
+                            shelfOptions={props.shelfOptions}
+                            currentShelf={props.shelf.value}
+                            onChangeShelf={props.onChangeShelf} />
+                    )
+                }
             </div>
         </div>
     </div>

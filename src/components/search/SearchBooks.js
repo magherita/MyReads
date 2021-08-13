@@ -8,11 +8,16 @@ const SearchBooks = (props) => (
         <SearchBooksBar
             onSearch={props.onSearch}
         />
-        <SearchBooksResults
-            books={props.books}
-            onChangeShelf={props.onChangeShelf}
-            shelfOptions={props.shelfOptions}
-        />
+        {
+            props.books.length &&
+            (
+                <SearchBooksResults
+                    books={props.books}
+                    onChangeShelf={props.onChangeShelf}
+                    shelfOptions={props.shelfOptions}
+                />
+            )
+        }
     </div>
 )
 
@@ -20,7 +25,7 @@ SearchBooks.propTypes = {
     onSearch: PropTypes.func.isRequired,
     onChangeShelf: PropTypes.func.isRequired,
     shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.array.isRequired
+    books: PropTypes.any.isRequired
 };
 
 export default SearchBooks;

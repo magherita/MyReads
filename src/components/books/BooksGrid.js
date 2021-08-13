@@ -4,16 +4,19 @@ import Book from "./Book";
 
 const BooksGrid = (props) => (
     <ol className="books-grid">
-        {props.books && props.books.map(book => (
-            <li key={book.id}>
-                <Book
-                    book={book}
-                    shelfOptions={props.shelfOptions}
-                    currentShelf={props.currentShelf}
-                    onChangeShelf={props.onChangeShelf}
-                />
-            </li>
-        ))}
+        {
+            props.books.length &&
+            props.books.map(book => (
+                <li key={book.id}>
+                    <Book
+                        book={book}
+                        shelfOptions={props.shelfOptions}
+                        currentShelf={props.currentShelf}
+                        onChangeShelf={props.onChangeShelf}
+                    />
+                </li>
+            ))
+        }
     </ol>
 )
 
