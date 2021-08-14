@@ -18,7 +18,7 @@ const BookShelfChanger = (props) => (
 BookShelfChanger.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,
     shelfOptions: PropTypes.array.isRequired,
-    book: PropTypes.object.isRequired,
+    book: PropTypes.any.isRequired,
     currentShelf: PropTypes.string
 };
 

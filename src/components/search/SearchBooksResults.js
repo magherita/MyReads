@@ -19,7 +19,7 @@ const SearchBooksResults = (props) => (
 SearchBooksResults.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,
     shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.array.isRequired
+    books: PropTypes.any.isRequired
 };
 
 export default SearchBooksResults;

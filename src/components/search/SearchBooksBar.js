@@ -43,7 +43,8 @@ class SearchBooksBar extends React.Component {
                         type="text"
                         placeholder="Search by title or author"
                         value={searchTerm}
-                        onChange={this.handleSearch} />
+                        onChange={this.handleSearch}
+                    />
                 </div>
             </div>
         )

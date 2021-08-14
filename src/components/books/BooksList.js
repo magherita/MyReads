@@ -28,7 +28,7 @@ const BooksList = (props) => (
 BooksList.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,
     shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.array.isRequired,
+    books: PropTypes.any.isRequired,
     shelvedBooks: PropTypes.object.isRequired
 };
 

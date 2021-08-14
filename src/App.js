@@ -24,9 +24,9 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll()
-      .then(bks => {
+      .then(books => {
         this.setState({
-          books: bks
+          books: books
         });
       })
   }
@@ -48,6 +48,8 @@ class BooksApp extends React.Component {
     const selectedShelf = event.target.value;
     const currentShelvedBooks = this.state.shelvedBooks;
 
+    // if selected shelf is same as book's current shelf
+    // do nothing
     if (currentShelf === selectedShelf) {
       return;
     }
@@ -60,7 +62,7 @@ class BooksApp extends React.Component {
           currentShelvedBooks[shelf] = [...currentShelvedBooks[shelf].filter(bk => bk.id !== book.id)];
         }
       });
-
+      // add book to selected shelf
       currentShelvedBooks[selectedShelf].push(book);
     } else {
       // remove book from current shelf

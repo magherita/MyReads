@@ -23,7 +23,7 @@ const BooksGrid = (props) => (
 BooksGrid.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,
     shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.array,
+    books: PropTypes.any,
     currentShelf: PropTypes.string
 };
 
