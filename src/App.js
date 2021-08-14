@@ -11,35 +11,24 @@ class BooksApp extends React.Component {
     shelfOptions: [
       { value: "currentlyReading", label: "Currently Reading" },
       { value: "wantToRead", label: "Want to Read" },
-      { value: "read", label: "Read" },
-      { value: "none", label: "None" },
+      { value: "read", label: "Read" }
     ],
     shelvedBooks: {
       "currentlyReading": [],
       "wantToRead": [],
-      "read": [],
-      "none": []
+      "read": []
     }
-  }
-
-  componentDidMount() {
-    BooksAPI.getAll()
-      .then(books => {
-        this.setState({
-          books: books
-        });
-      })
   }
 
   onSearch = (searchTerm) => {
     BooksAPI.search(searchTerm)
       .then(books => {
         this.setState({
-          books: books
+          books: books === undefined ? [] : books
         });
-      }).catch(error => {
+      }).catch(_ => {
         this.setState({
-          books: error.items
+          books: []
         });
       });
   };
@@ -50,7 +39,7 @@ class BooksApp extends React.Component {
 
     // if selected shelf is same as book's current shelf
     // do nothing
-    if (currentShelf === selectedShelf) {
+    if (currentShelf === selectedShelf || selectedShelf === "none") {
       return;
     }
 
@@ -64,11 +53,19 @@ class BooksApp extends React.Component {
       });
       // add book to selected shelf
       currentShelvedBooks[selectedShelf].push(book);
+      // update book shelf via api
+      // BooksAPI.update(book, selectedShelf)
+      //   .then(data => console.log("Update " + data))
+      //   .catch(error => console.log("error " + error));
     } else {
       // remove book from current shelf
       currentShelvedBooks[currentShelf] = [...currentShelvedBooks[currentShelf].filter(bk => bk.id !== book.id)];
       // add book to selected shelf
       currentShelvedBooks[selectedShelf].push(book);
+      // update book shelf via api
+      // BooksAPI.update(book, selectedShelf)
+      //   .then(data => console.log("Update " + data))
+      //   .catch(error => console.log("error " + error));
     }
 
     this.setState({
