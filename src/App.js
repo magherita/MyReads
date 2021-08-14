@@ -42,7 +42,7 @@ class BooksApp extends React.Component {
           books: error.items
         });
       });
-  }
+  };
 
   onChangeShelf = (book, currentShelf) => event => {
     const selectedShelf = event.target.value;
@@ -74,7 +74,7 @@ class BooksApp extends React.Component {
     this.setState({
       shelvedBooks: currentShelvedBooks
     });
-  }
+  };
 
   render() {
     const { books, shelfOptions, shelvedBooks } = this.state;
@@ -105,7 +105,7 @@ class BooksApp extends React.Component {
           )}
         />
       </div>
-    )
+    );
   }
 }
 

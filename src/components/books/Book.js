@@ -25,7 +25,7 @@ const Book = (props) => (
         <div className="book-title">{props.book.title}</div>
         <div className="book-authors">{props.book.authors}</div>
     </div>
-)
+);
 
 Book.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,

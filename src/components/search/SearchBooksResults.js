@@ -14,7 +14,7 @@ const SearchBooksResults = (props) => (
             )
         }
     </div>
-)
+);
 
 SearchBooksResults.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,

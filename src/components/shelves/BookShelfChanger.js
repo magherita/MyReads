@@ -13,7 +13,7 @@ const BookShelfChanger = (props) => (
             ))}
         </select>
     </div>
-)
+);
 
 BookShelfChanger.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,

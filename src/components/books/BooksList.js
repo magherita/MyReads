@@ -23,7 +23,7 @@ const BooksList = (props) => (
         </div>
         <OpenSearch />
     </div>
-)
+);
 
 BooksList.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,

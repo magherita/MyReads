@@ -19,12 +19,12 @@ class SearchBooksBar extends React.Component {
         if (this.state.searchTerm.trim().length > 0) {
             this.props.onSearch(this.state.searchTerm.trim());
         }
-    }
+    };
 
     handleClose = () => {
         const { history } = this.props;
         history.push("/");
-    }
+    };
 
     render() {
         const { searchTerm } = this.state;
@@ -47,7 +47,7 @@ class SearchBooksBar extends React.Component {
                     />
                 </div>
             </div>
-        )
+        );
     }
 }
 

@@ -9,6 +9,6 @@ const OpenSearch = () => (
             </button>
         </Link>
     </div>
-)
+);
 
 export default OpenSearch;

@@ -20,7 +20,7 @@ const BookShelf = (props) => (
             </div>
         </div>
     </div>
-)
+);
 
 BookShelf.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,

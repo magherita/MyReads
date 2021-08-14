@@ -19,7 +19,7 @@ const SearchBooks = (props) => (
             )
         }
     </div>
-)
+);
 
 SearchBooks.propTypes = {
     onSearch: PropTypes.func.isRequired,

@@ -18,7 +18,7 @@ const BooksGrid = (props) => (
             ))
         }
     </ol>
-)
+);
 
 BooksGrid.propTypes = {
     onChangeShelf: PropTypes.func.isRequired,
