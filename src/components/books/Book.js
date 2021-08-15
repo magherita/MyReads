@@ -15,10 +15,9 @@ const Book = (props) => (
             </div>
 
             <BookShelfChanger
-                onChangeShelf={props.onChangeShelf}
-                shelfOptions={props.shelfOptions}
+                onUpdateBookShelf={props.onUpdateBookShelf}
+                getCurrentBookShelf={props.getCurrentBookShelf}
                 book={props.book}
-                currentShelf={props.currentShelf}
             />
 
         </div>
@@ -28,10 +27,9 @@ const Book = (props) => (
 );
 
 Book.propTypes = {
-    onChangeShelf: PropTypes.func.isRequired,
-    shelfOptions: PropTypes.array.isRequired,
-    book: PropTypes.any.isRequired,
-    currentShelf: PropTypes.string
+    onUpdateBookShelf: PropTypes.func.isRequired,
+    getCurrentBookShelf: PropTypes.func.isRequired,
+    book: PropTypes.object.isRequired,
 };
 
 export default Book;

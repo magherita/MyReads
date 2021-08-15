@@ -13,8 +13,8 @@ const SearchBooks = (props) => (
             (
                 <SearchBooksResults
                     books={props.books}
-                    onChangeShelf={props.onChangeShelf}
-                    shelfOptions={props.shelfOptions}
+                    onUpdateBookShelf={props.onUpdateBookShelf}
+                    getCurrentBookShelf={props.getCurrentBookShelf}
                 />
             )
         }
@@ -23,9 +23,9 @@ const SearchBooks = (props) => (
 
 SearchBooks.propTypes = {
     onSearch: PropTypes.func.isRequired,
-    onChangeShelf: PropTypes.func.isRequired,
-    shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.any.isRequired
+    onUpdateBookShelf: PropTypes.func.isRequired,
+    getCurrentBookShelf: PropTypes.func.isRequired,
+    books: PropTypes.array.isRequired
 };
 
 export default SearchBooks;

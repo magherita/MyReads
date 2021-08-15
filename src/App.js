@@ -7,8 +7,8 @@ import BooksList from "./components/books/BooksList";
 
 class BooksApp extends React.Component {
   state = {
-    books: [],
-    shelfOptions: [
+    searchedBooks: [],
+    shelves: [
       { value: "currentlyReading", label: "Currently Reading" },
       { value: "wantToRead", label: "Want to Read" },
       { value: "read", label: "Read" }
@@ -18,63 +18,62 @@ class BooksApp extends React.Component {
       "wantToRead": [],
       "read": []
     }
+  };
+
+  componentDidMount() {
+    this.refreshShelvedBooks();
   }
 
   onSearch = (searchTerm) => {
     BooksAPI.search(searchTerm)
       .then(books => {
         this.setState({
-          books: books === undefined ? [] : books
+          searchedBooks: Array.isArray(books) ? books : []
         });
       }).catch(_ => {
         this.setState({
-          books: []
+          searchedBooks: []
         });
       });
   };
 
-  onChangeShelf = (book, currentShelf) => event => {
-    const selectedShelf = event.target.value;
-    const currentShelvedBooks = this.state.shelvedBooks;
-
-    // if selected shelf is same as book's current shelf
-    // do nothing
-    if (currentShelf === selectedShelf || selectedShelf === "none") {
-      return;
-    }
-
-    if (currentShelf === undefined) {
-      // check whether book is already shelved
-      Object.keys(currentShelvedBooks).forEach(shelf => {
-        if (currentShelvedBooks[shelf].filter(bk => bk.id === book.id).length > 0) {
-          // remove book from current shelf
-          currentShelvedBooks[shelf] = [...currentShelvedBooks[shelf].filter(bk => bk.id !== book.id)];
-        }
+  onUpdateBookShelf = (book, selectedShelf) => {
+    BooksAPI.update(book, selectedShelf)
+      .then(_ => {
+        this.refreshShelvedBooks();
+      }).catch(_ => {
+        // do nothing
       });
-      // add book to selected shelf
-      currentShelvedBooks[selectedShelf].push(book);
-      // update book shelf via api
-      // BooksAPI.update(book, selectedShelf)
-      //   .then(data => console.log("Update " + data))
-      //   .catch(error => console.log("error " + error));
-    } else {
-      // remove book from current shelf
-      currentShelvedBooks[currentShelf] = [...currentShelvedBooks[currentShelf].filter(bk => bk.id !== book.id)];
-      // add book to selected shelf
-      currentShelvedBooks[selectedShelf].push(book);
-      // update book shelf via api
-      // BooksAPI.update(book, selectedShelf)
-      //   .then(data => console.log("Update " + data))
-      //   .catch(error => console.log("error " + error));
-    }
+  };
 
-    this.setState({
-      shelvedBooks: currentShelvedBooks
+  refreshShelvedBooks = () => {
+    BooksAPI.getAll().then(books => {
+      const shelvedBooks = {};
+      this.state.shelves.forEach((shelf, _, __) => {
+        shelvedBooks[shelf.value] = books.filter(bk => bk.shelf === shelf.value);
+      });
+      this.setState({
+        shelvedBooks: shelvedBooks
+      });
+    }).catch(_ => {
     });
   };
 
+  getCurrentBookShelf = (book) => {
+    const { shelves, shelvedBooks } = this.state;
+    let shelfValue = "none";
+    shelves.forEach((shelf, _, __) => {
+      const books = shelvedBooks[shelf.value];
+      if (books.filter(bk => bk.id === book.id).length > 0) {
+        shelfValue = shelf.value;
+        return;
+      }
+    });
+    return shelfValue;
+  };
+
   render() {
-    const { books, shelfOptions, shelvedBooks } = this.state;
+    const { searchedBooks, shelves, shelvedBooks } = this.state;
 
     return (
       <div className="app">
@@ -82,10 +81,10 @@ class BooksApp extends React.Component {
           exact path="/"
           render={() => (
             <BooksList
-              onChangeShelf={this.onChangeShelf}
-              books={books}
-              shelfOptions={shelfOptions}
+              onUpdateBookShelf={this.onUpdateBookShelf}
+              getCurrentBookShelf={this.getCurrentBookShelf}
               shelvedBooks={shelvedBooks}
+              shelves={shelves}
             />
           )}
         />
@@ -94,9 +93,9 @@ class BooksApp extends React.Component {
           exact path="/search"
           render={() => (
             <SearchBooks
-              onChangeShelf={this.onChangeShelf}
-              books={books}
-              shelfOptions={shelfOptions}
+              onUpdateBookShelf={this.onUpdateBookShelf}
+              getCurrentBookShelf={this.getCurrentBookShelf}
+              books={searchedBooks}
               onSearch={this.onSearch}
             />
           )}

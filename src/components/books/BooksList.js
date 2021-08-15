@@ -10,13 +10,13 @@ const BooksList = (props) => (
         </div>
         <div className="list-books-content">
             {
-                props.shelfOptions.map(shelf => (
+                props.shelves.map(shelf => (
                     <BookShelf
                         key={shelf.value}
-                        onChangeShelf={props.onChangeShelf}
-                        books={props.shelvedBooks[shelf.value]}
+                        onUpdateBookShelf={props.onUpdateBookShelf}
+                        getCurrentBookShelf={props.getCurrentBookShelf}
+                        shelvedBooks={props.shelvedBooks}
                         shelf={shelf}
-                        shelfOptions={props.shelfOptions}
                     />
                 ))
             }
@@ -26,10 +26,10 @@ const BooksList = (props) => (
 );
 
 BooksList.propTypes = {
-    onChangeShelf: PropTypes.func.isRequired,
-    shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.any.isRequired,
-    shelvedBooks: PropTypes.object.isRequired
+    onUpdateBookShelf: PropTypes.func.isRequired,
+    getCurrentBookShelf: PropTypes.func.isRequired,
+    shelvedBooks: PropTypes.object.isRequired,
+    shelves: PropTypes.array.isRequired
 };
 
 export default BooksList;

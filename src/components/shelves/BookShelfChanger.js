@@ -1,29 +1,51 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// change to class component
-// add state
-// update book shelf via api
-const BookShelfChanger = (props) => (
-    <div className="book-shelf-changer">
-        <select
-            onChange={props.onChangeShelf(props.book, props.currentShelf)}
-            defaultValue="none"
-        >
-            <option value="move" disabled>Move to...</option>
-            {props.shelfOptions.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-            ))}
-            <option value="none" disabled>None</option>
-        </select>
-    </div>
-);
+class BookShelfChanger extends React.Component {
+    static propTypes = {
+        onUpdateBookShelf: PropTypes.func.isRequired,
+        getCurrentBookShelf: PropTypes.func.isRequired,
+        book: PropTypes.object.isRequired,
+    };
 
-BookShelfChanger.propTypes = {
-    onChangeShelf: PropTypes.func.isRequired,
-    shelfOptions: PropTypes.array.isRequired,
-    book: PropTypes.any.isRequired,
-    currentShelf: PropTypes.string
-};
+    state = {
+        selectedShelf: this.props.getCurrentBookShelf(this.props.book)
+    };
+
+    handleSelect = event => {
+        this.setState({
+            selectedShelf: event.target.value
+        });
+        this.updateBookShelf(event.target.value);
+    };
+
+    updateBookShelf = (selectedShelf) => {
+        this.props.onUpdateBookShelf(this.props.book, selectedShelf);
+    };
+
+    render() {
+        const { selectedShelf } = this.state;
+        const shelves = [
+            { value: "currentlyReading", label: "Currently Reading" },
+            { value: "wantToRead", label: "Want to Read" },
+            { value: "read", label: "Read" },
+            { value: "none", label: "None" },
+        ];
+
+        return (
+            <div className="book-shelf-changer">
+                <select
+                    value={selectedShelf}
+                    onChange={this.handleSelect}
+                >
+                    <option value="move" disabled>Move to...</option>
+                    {shelves.map(opt => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                </select>
+            </div>
+        );
+    }
+}
 
 export default BookShelfChanger;

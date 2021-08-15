@@ -7,25 +7,20 @@ const BookShelf = (props) => (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{props.shelf.label}</h2>
             <div className="bookshelf-books">
-                {
-                    props.books.length &&
-                    (
-                        <BooksGrid
-                            books={props.books}
-                            shelfOptions={props.shelfOptions}
-                            currentShelf={props.shelf.value}
-                            onChangeShelf={props.onChangeShelf} />
-                    )
-                }
+                <BooksGrid
+                    books={props.shelvedBooks[props.shelf.value]}
+                    onUpdateBookShelf={props.onUpdateBookShelf}
+                    getCurrentBookShelf={props.getCurrentBookShelf}
+                />
             </div>
         </div>
     </div>
 );
 
 BookShelf.propTypes = {
-    onChangeShelf: PropTypes.func.isRequired,
-    shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.any,
+    onUpdateBookShelf: PropTypes.func.isRequired,
+    getCurrentBookShelf: PropTypes.func.isRequired,
+    shelvedBooks: PropTypes.object.isRequired,
     shelf: PropTypes.object.isRequired
 };
 

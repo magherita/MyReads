@@ -8,8 +8,8 @@ const SearchBooksResults = (props) => (
             props.books.length && (
                 <BooksGrid
                     books={props.books}
-                    onChangeShelf={props.onChangeShelf}
-                    shelfOptions={props.shelfOptions}
+                    onUpdateBookShelf={props.onUpdateBookShelf}
+                    getCurrentBookShelf={props.getCurrentBookShelf}
                 />
             )
         }
@@ -17,9 +17,9 @@ const SearchBooksResults = (props) => (
 );
 
 SearchBooksResults.propTypes = {
-    onChangeShelf: PropTypes.func.isRequired,
-    shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.any.isRequired
+    onUpdateBookShelf: PropTypes.func.isRequired,
+    getCurrentBookShelf: PropTypes.func.isRequired,
+    books: PropTypes.array.isRequired
 };
 
 export default SearchBooksResults;

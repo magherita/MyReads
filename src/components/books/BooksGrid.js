@@ -10,9 +10,8 @@ const BooksGrid = (props) => (
                 <li key={book.id}>
                     <Book
                         book={book}
-                        shelfOptions={props.shelfOptions}
-                        currentShelf={props.currentShelf}
-                        onChangeShelf={props.onChangeShelf}
+                        onUpdateBookShelf={props.onUpdateBookShelf}
+                        getCurrentBookShelf={props.getCurrentBookShelf}
                     />
                 </li>
             ))
@@ -21,10 +20,9 @@ const BooksGrid = (props) => (
 );
 
 BooksGrid.propTypes = {
-    onChangeShelf: PropTypes.func.isRequired,
-    shelfOptions: PropTypes.array.isRequired,
-    books: PropTypes.any,
-    currentShelf: PropTypes.string
+    onUpdateBookShelf: PropTypes.func.isRequired,
+    getCurrentBookShelf: PropTypes.func.isRequired,
+    books: PropTypes.array.isRequired,
 };
 
 export default BooksGrid;
