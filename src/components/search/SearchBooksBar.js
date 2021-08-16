@@ -15,7 +15,7 @@ class SearchBooksBar extends React.Component {
         this.setState({
             searchTerm: event.target.value
         });
-        this.props.onSearch(this.state.searchTerm);
+        this.props.onSearch(event.target.value);
     };
 
     handleClose = () => {
