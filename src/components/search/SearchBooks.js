@@ -3,23 +3,27 @@ import PropTypes from "prop-types";
 import SearchBooksBar from "./SearchBooksBar";
 import SearchBooksResults from "./SearchBooksResults";
 
-const SearchBooks = (props) => (
-    <div className="search-books">
-        <SearchBooksBar
-            onSearch={props.onSearch}
-        />
-        {
-            props.books.length &&
-            (
-                <SearchBooksResults
-                    books={props.books}
-                    onUpdateBookShelf={props.onUpdateBookShelf}
-                    getCurrentBookShelf={props.getCurrentBookShelf}
-                />
-            )
-        }
-    </div>
-);
+const SearchBooks = (props) => {
+    const { onSearch, books, onUpdateBookShelf, getCurrentBookShelf } = props;
+
+    return (
+        <div className="search-books">
+            <SearchBooksBar
+                onSearch={onSearch}
+            />
+            {
+                books.length &&
+                (
+                    <SearchBooksResults
+                        books={books}
+                        onUpdateBookShelf={onUpdateBookShelf}
+                        getCurrentBookShelf={getCurrentBookShelf}
+                    />
+                )
+            }
+        </div>
+    );
+};
 
 SearchBooks.propTypes = {
     onSearch: PropTypes.func.isRequired,
