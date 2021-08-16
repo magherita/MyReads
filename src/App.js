@@ -21,11 +21,16 @@ class BooksApp extends React.Component {
   };
 
   componentDidMount() {
-    this.refreshShelvedBooks();
+    this.getShelvedBooks();
   }
 
   onSearch = (searchTerm) => {
-    BooksAPI.search(searchTerm)
+    if(searchTerm === ""){
+      this.setState({
+        searchedBooks: []
+      });
+    } else{
+      BooksAPI.search(searchTerm)
       .then(books => {
         this.setState({
           searchedBooks: Array.isArray(books) ? books : []
@@ -35,18 +40,34 @@ class BooksApp extends React.Component {
           searchedBooks: []
         });
       });
+    }    
   };
 
   onUpdateBookShelf = (book, selectedShelf) => {
     BooksAPI.update(book, selectedShelf)
       .then(_ => {
-        this.refreshShelvedBooks();
+        book.shelf = selectedShelf;        
+        const {shelves, shelvedBooks} = this.state;
+        const updatedShelvedBooks = shelvedBooks;
+        shelves.forEach((shelf, _, __) => {
+          const books = updatedShelvedBooks[shelf.value];
+          if(books.filter(bk => bk.id === book.id).length > 0){
+            updatedShelvedBooks[shelf.value] = books.filter(bk => bk.id !== book.id);
+            return;
+          }
+        });
+        if(selectedShelf !== "none"){
+          updatedShelvedBooks[selectedShelf] = updatedShelvedBooks[selectedShelf].concat(book);
+        }
+        this.setState({
+          shelvedBooks: updatedShelvedBooks
+        });
       }).catch(_ => {
         // do nothing
       });
   };
 
-  refreshShelvedBooks = () => {
+  getShelvedBooks = () => {
     BooksAPI.getAll().then(books => {
       const shelvedBooks = {};
       this.state.shelves.forEach((shelf, _, __) => {
